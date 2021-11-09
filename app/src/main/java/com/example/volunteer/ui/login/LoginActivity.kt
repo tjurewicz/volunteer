@@ -14,12 +14,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 
 import com.example.volunteer.R
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel by viewModels()
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
 
-        loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
                 .get(loginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
