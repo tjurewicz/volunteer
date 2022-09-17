@@ -2,22 +2,19 @@ package com.example.volunteer.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.volunteer.R
 import com.example.volunteer.data.VenueModel
+import com.example.volunteer.data.Job
 import com.example.volunteer.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -45,10 +42,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getVenueData() {
         venue = VenueModel(
-            name = "Muswell Hill Soup Kitchen",
-            workingHours = mapOf(
-                "Monday" to "7pm - 8pm",
-                "Tuesday" to "12pm - 1pm"
+            name = "Muswell Hill Soup Kitchen", workingHours = mapOf(
+                Job("Monday", "7pm - 8pm") to false,
+                Job("Tuesday", "12pm - 1pm") to false,
+                Job("Tuesday", "4pm - 5pm") to false,
+                Job("Thursday", "7pm - 8pm") to false,
             )
         )
     }
@@ -75,8 +73,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setBottomSheetVisibility(isVisible: Boolean) {
         val updatedState =
-            if (isVisible) BottomSheetBehavior.STATE_EXPANDED
-            else BottomSheetBehavior.STATE_COLLAPSED
+            if (isVisible) BottomSheetBehavior.STATE_EXPANDED else BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetBehavior.state = updatedState
     }
 

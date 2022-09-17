@@ -7,9 +7,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.volunteer.R
+import com.example.volunteer.data.Job
 
 class WorkingHoursAdapter(
-    private val workingTimes: Map<String, String>
+    private val jobMap: Map<Job, Boolean>
 ) : RecyclerView.Adapter<WorkingHoursAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,12 +20,17 @@ class WorkingHoursAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val day = workingTimes.keys.elementAt(position)
-        workingTimes[day]?.let { holder.populate(day, it) }
+        val job = jobMap.keys.elementAt(position)
+        if (position > 0) {
+            val previousJob = jobMap.keys.elementAt(position - 1)
+            if (previousJob.day == job.day) {
+                holder.populate("", job.time, jobMap[job])
+            }
+        }
+        holder.populate(job.day, job.time, jobMap[job])
     }
 
-    override fun getItemCount(): Int = workingTimes.entries.size
-
+    override fun getItemCount(): Int = jobMap.entries.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -32,19 +38,9 @@ class WorkingHoursAdapter(
         private val time: TextView = view.findViewById(R.id.working_time)
         private val join: Button = view.findViewById(R.id.join_button)
 
-        fun populate(workingDay: String, workingHours: String) {
+        fun populate(workingDay: String, workingHours: String, joined: Boolean? = false) {
             day.text = workingDay
             time.text = workingHours
-            var joined = false
-            join.setOnClickListener {
-                if (joined) {
-                    joined = !joined
-                    it.setBackgroundResource(R.color.blue_200)
-                } else {
-                    joined = !joined
-                    it.setBackgroundResource(R.color.black)
-                }
-            }
         }
     }
 }
