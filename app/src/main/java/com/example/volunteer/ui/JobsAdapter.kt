@@ -18,7 +18,7 @@ class JobsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_working_hours, parent, false)
+            .inflate(R.layout.list_jobs, parent, false)
         return ViewHolder(view)
     }
 
@@ -27,12 +27,12 @@ class JobsAdapter(
         if (position > 0) {
             val previousJob = jobsList[position - 1]
             if (previousJob.day == job.day) {
-                holder.bind(job, position, listener)
+                holder.bind(job, position, listener, false)
             } else {
                 holder.bind(job, position, listener)
             }
         } else {
-            holder.bind(job, position, listener)
+            holder.bind(job, position, listener, false)
         }
     }
 
@@ -40,6 +40,7 @@ class JobsAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val separatorView: View = view.findViewById(R.id.job_separator)
         private val dayView: TextView = view.findViewById(R.id.day)
         private val timeView: TextView = view.findViewById(R.id.time)
         private val joinButton: Button = view.findViewById(R.id.join_button)
@@ -48,9 +49,15 @@ class JobsAdapter(
         fun bind(
             job: Job,
             position: Int,
-            listener: OnClickJoinButton?
+            listener: OnClickJoinButton?,
+            dayVisible: Boolean = true
         ) {
-            dayView.text = job.day
+            if (dayVisible) {
+                separatorView.visibility = View.VISIBLE
+                dayView.text = job.day
+            } else if (position == 0) {
+                dayView.text = job.day
+            }
             timeView.text = job.time
             joinButton.setOnClickListener {
                 listener?.setUserAttending(job, position)

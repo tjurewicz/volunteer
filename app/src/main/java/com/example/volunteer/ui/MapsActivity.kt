@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.volunteer.R
 import com.example.volunteer.data.VenueModel
@@ -39,7 +40,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
         getVenueData()
         getUserData()
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView)
-        bottomSheetBehavior.maxHeight = 2000
+        bottomSheetBehavior.maxHeight = 1000
         setBottomSheetVisibility(false)
     }
 
@@ -73,7 +74,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
         jobsAdapter.listener = this
         bottomSheetView.findViewById<TextView>(R.id.title).text = venue.name
         bottomSheetView.findViewById<TextView>(R.id.description_body).text = venue.description
-        bottomSheetView.findViewById<RecyclerView>(R.id.times).adapter = jobsAdapter
+        val recyclerView = bottomSheetView.findViewById<RecyclerView>(R.id.jobs)
+        recyclerView.adapter = jobsAdapter
+        recyclerView.layoutManager =
+            object : LinearLayoutManager(this) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            }
         setBottomSheetVisibility(true)
     }
 
