@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Volunteer</string>
+    <string name="description_title">Description</string>
+    <string name="loading">Loading...</string>
 </resources>

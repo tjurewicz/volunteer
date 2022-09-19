@@ -15,7 +15,7 @@
         android:id="@+id/pill_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/spacing_small"
         android:src="@drawable/view_pill_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,22 +25,19 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:maxLines="3"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:maxLines="2"
+        android:padding="@dimen/spacing_medium"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pill_button"
-        tools:text="Muswell Hill Soup " />
+        tools:text="Muswell Hill Soup Kitchen" />
 
     <View
         android:id="@+id/title_separator"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="4dp"
+        android:paddingTop="@dimen/spacing_xsmall"
         android:background="@color/grey_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +47,7 @@
         android:id="@+id/times"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:paddingTop="@dimen/spacing_small"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,11 +55,23 @@
         tools:listitem="@layout/list_working_hours" />
 
     <TextView
+        android:id="@+id/description_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/times"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/description_title"
         android:textSize="24sp"
-        android:text="Description:"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/times" />
+
+    <TextView
+        android:id="@+id/description_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_medium"
+        android:text="@string/loading"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
