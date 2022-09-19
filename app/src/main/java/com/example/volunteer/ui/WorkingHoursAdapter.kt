@@ -10,7 +10,7 @@ import com.example.volunteer.R
 import com.example.volunteer.data.Job
 
 class WorkingHoursAdapter(
-    private val jobMap: Map<Job, Boolean>
+    private val jobsList: List<Job>
 ) : RecyclerView.Adapter<WorkingHoursAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,17 +20,18 @@ class WorkingHoursAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val job = jobMap.keys.elementAt(position)
+        val job = jobsList[position]
         if (position > 0) {
-            val previousJob = jobMap.keys.elementAt(position - 1)
+            val previousJob = jobsList[position - 1]
             if (previousJob.day == job.day) {
-                holder.populate("", job.time, jobMap[job])
+                holder.populate("", job.time, job.isUserAttending)
             }
+        } else {
+            holder.populate(job.day, job.time, job.isUserAttending)
         }
-        holder.populate(job.day, job.time, jobMap[job])
     }
 
-    override fun getItemCount(): Int = jobMap.entries.size
+    override fun getItemCount(): Int = jobsList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -38,9 +39,14 @@ class WorkingHoursAdapter(
         private val time: TextView = view.findViewById(R.id.working_time)
         private val join: Button = view.findViewById(R.id.join_button)
 
-        fun populate(workingDay: String, workingHours: String, joined: Boolean? = false) {
+        fun populate(workingDay: String, workingHours: String, isUserAttending: Boolean = false) {
             day.text = workingDay
             time.text = workingHours
+            if (isUserAttending) {
+                join.text = "Leave"
+            } else {
+                join.text = "Join"
+            }
         }
     }
 }

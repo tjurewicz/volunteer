@@ -6,11 +6,13 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VenueModel(
     val name: String,
-    var workingHours: Map<Job, Boolean>
+    var jobsList: List<Job>
 ) : Parcelable
 
 @Parcelize
 data class Job(
+    val id: String? = null,
     val day: String,
-    val time: String
+    val time: String,
+    val isUserAttending: Boolean
 ) : Parcelable

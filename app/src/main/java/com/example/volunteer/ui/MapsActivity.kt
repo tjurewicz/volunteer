@@ -42,11 +42,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getVenueData() {
         venue = VenueModel(
-            name = "Muswell Hill Soup Kitchen", workingHours = mapOf(
-                Job("Monday", "7pm - 8pm") to false,
-                Job("Tuesday", "12pm - 1pm") to false,
-                Job("Tuesday", "4pm - 5pm") to false,
-                Job("Thursday", "7pm - 8pm") to false,
+            name = "Muswell Hill Soup Kitchen", jobsList = listOf(
+                Job(day = "Monday", time = "7pm - 8pm", isUserAttending = false),
+                Job(day = "Tuesday", time = "12pm - 1pm", isUserAttending = false),
+                Job(day = "Tuesday", time = "4pm - 5pm", isUserAttending = false),
+                Job(day = "Thursday", time = "7pm - 8pm", isUserAttending = false)
             )
         )
     }
@@ -65,7 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun onMarkerClicked() {
-        workingHoursAdapter = WorkingHoursAdapter(venue.workingHours)
+        workingHoursAdapter = WorkingHoursAdapter(venue.jobsList)
         bottomSheetView.findViewById<TextView>(R.id.title).text = venue.name
         bottomSheetView.findViewById<RecyclerView>(R.id.times).adapter = workingHoursAdapter
         setBottomSheetVisibility(true)
