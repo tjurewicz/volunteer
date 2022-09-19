@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VenueModel(
     val name: String,
+    val description: String,
     var jobsList: List<Job>
 ) : Parcelable
 

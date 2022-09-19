@@ -42,7 +42,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getVenueData() {
         venue = VenueModel(
-            name = "Muswell Hill Soup Kitchen", jobsList = listOf(
+            name = "Muswell Hill Soup Kitchen",
+            description = "You'll be serving food to guests ",
+            jobsList = listOf(
                 Job(day = "Monday", time = "7pm - 8pm", isUserAttending = false),
                 Job(day = "Tuesday", time = "12pm - 1pm", isUserAttending = false),
                 Job(day = "Tuesday", time = "4pm - 5pm", isUserAttending = false),
