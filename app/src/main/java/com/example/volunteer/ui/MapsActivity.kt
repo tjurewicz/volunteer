@@ -1,6 +1,7 @@
 package com.example.volunteer.ui
 
 import Job
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton {
@@ -30,6 +32,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var jobsAdapter: JobsAdapter
     private val bottomSheetView by lazy { findViewById<View>(R.id.standard_bottom_sheet) }
+    private val profileButton by lazy { findViewById<FloatingActionButton>(R.id.profile_button) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView)
         bottomSheetBehavior.maxHeight = 1000
         setBottomSheetVisibility(false)
+        profileButton.setOnClickListener { startActivity(Intent(this, ProfileActivity::class.java)) }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -95,6 +99,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
         bottomSheetBehavior.state = updatedState
     }
 
+    override fun setUserAttending(job: Job, position: Int) {
+        job.isUserAttending = !job.isUserAttending
+        if (job.isUserAttending) {
+            user.job.add(job)
+        } else {
+            user.job.remove(job)
+        }
+        jobsAdapter.notifyItemChanged(position)
+    }
+
+    private fun getUserData() {
+        user = User(mutableListOf())
+    }
+
     private fun getVenueData() {
         venue = listOf(
             VenueModel(
@@ -136,10 +154,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
         )
     }
 
-    private fun getUserData() {
-        user = User(mutableListOf())
-    }
-
     companion object {
         const val MIN_ZOOM = 10f
         val LONDON_LAT_LONG = LatLng(51.5072, -0.12)
@@ -147,15 +161,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, OnClickJoinButton 
             LatLng(51.2, -0.4),  // SW bounds
             LatLng(51.7, 0.2)    // NE bounds
         )
-    }
-
-    override fun setUserAttending(job: Job, position: Int) {
-        job.isUserAttending = !job.isUserAttending
-        if (job.isUserAttending) {
-            user.job.add(job)
-        } else {
-            user.job.remove(job)
-        }
-        jobsAdapter.notifyItemChanged(position)
     }
 }
